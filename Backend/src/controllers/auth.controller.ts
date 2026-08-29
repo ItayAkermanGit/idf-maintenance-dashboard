@@ -33,6 +33,7 @@ export async function login(req: Request, res: Response): Promise<void> {
 
     const PAY_LOAD: AuthPayLoad = {
       userId: USER._id.toString(),
+      pernr: USER.pernr,
       isManager: USER.isManager,
       gdud: USER.gdud,
     };
@@ -42,6 +43,7 @@ export async function login(req: Request, res: Response): Promise<void> {
     res.status(200).json({
       message: AUTH_MESSAGES.LOGIN_SUCCESS,
       token: TOKEN,
+      user: PAY_LOAD,
     });
   } catch (error) {
     console.log("Login error:", error); // for debug perposus and for not sending the client side the error details for security reasons

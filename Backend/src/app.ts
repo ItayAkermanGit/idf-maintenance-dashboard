@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import cors from "cors";
 import mongoose from "mongoose";
 import { login } from "./controllers/auth.controller";
 import carRouter from "./routes/car.routes";
@@ -7,6 +8,13 @@ import mongoSanitize from "express-mongo-sanitize";
 
 const APP = express();
 APP.use(express.json());
+APP.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
+
 APP.use((req, _res, next) => {
   if (req.body) mongoSanitize.sanitize(req.body);
   if (req.params) mongoSanitize.sanitize(req.params);
@@ -16,7 +24,7 @@ APP.use((req, _res, next) => {
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/army_db";
 
-APP.post("/login", login);
+APP.post("/api/login", login);
 APP.use("/api/cars", carRouter);
 
 mongoose
