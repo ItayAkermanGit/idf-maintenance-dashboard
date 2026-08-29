@@ -2,14 +2,10 @@ import { Request, Response } from "express";
 import JWT from "jsonwebtoken";
 import { USER_MODEL } from "../models/user.interfaces";
 import { AUTH_MESSAGES } from "../../../Shared/src/constants";
+import { AuthPayLoad } from "../../../Shared/src/types/payload";
 
 export interface LoginRequest {
   pernr: string;
-}
-
-export interface AuthPayLoad {
-  userId: string;
-  isManager: number;
 }
 
 const JWT_SECRET = process.env.JWT_SECRET || "";
@@ -38,6 +34,7 @@ export async function login(req: Request, res: Response): Promise<void> {
     const PAY_LOAD: AuthPayLoad = {
       userId: USER._id.toString(),
       isManager: USER.isManager,
+      gdud: USER.gdud,
     };
 
     const TOKEN = JWT.sign(PAY_LOAD, JWT_SECRET, { expiresIn: "2h" });
