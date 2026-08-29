@@ -1,5 +1,5 @@
 export interface AuthPayLoad {
   userId: string;
-  isManager: number;
-  gdud: number; 
+  isManager: string;
+  gdud: string;
 }

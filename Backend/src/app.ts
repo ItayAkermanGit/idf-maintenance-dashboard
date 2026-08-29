@@ -1,19 +1,23 @@
 import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
-import { login } from "./contollers/auth.controller";
+import { login } from "./controllers/auth.controller";
 import carRouter from "./routes/car.routes";
 import mongoSanitize from "express-mongo-sanitize";
 
 const APP = express();
 APP.use(express.json());
-APP.use(mongoSanitize());
+APP.use((req, _res, next) => {
+  if (req.body) mongoSanitize.sanitize(req.body);
+  if (req.params) mongoSanitize.sanitize(req.params);
+  next();
+});
 
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/army_db";
 
 APP.post("/login", login);
-APP.use("api/cars", carRouter);
+APP.use("/api/cars", carRouter);
 
 mongoose
   .connect(MONGO_URI)

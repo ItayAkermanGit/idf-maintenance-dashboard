@@ -5,7 +5,7 @@ export function verifyManager(
     res: Response,
     next: NextFunction
 ): void {
-    if (req.user && req.user.isManager === 0) { 
+    if (req.user && req.user.isManager === "0") { 
         next();
     } else {
         res.status(403).json({ message: "Access denied. Managers only. "})

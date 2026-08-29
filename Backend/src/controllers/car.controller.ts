@@ -7,10 +7,11 @@ export async function getCars(req: Request, res: Response) {
     const { isManager, gdud } = req.user;
     let cars;
 
-    if (isManager === 0) 
+    if (isManager === "0") 
         cars = await getAllCars();
-    else 
+    else {
         cars = await getCarByGdud(gdud);
+    }
 
     res.status(200).json(cars);
   } catch (err) {
