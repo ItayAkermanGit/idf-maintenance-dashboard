@@ -25,7 +25,7 @@ export const LoginPage: React.FC = () => {
 
       LOGIN(token, user);
     } catch (err) {
-      setError("connection lost - please check that the lable pernr is right!");
+      setError("Could not connect - Wrong credentials");
     }
   };
 
@@ -53,9 +53,10 @@ export const LoginPage: React.FC = () => {
         >
           <TextField
             margin="normal"
+            type="number"
             required
             fullWidth
-            label="pernr"
+            label="personnel number"
             value={pernr}
             onChange={(e) => setPernr(e.target.value)}
             autoFocus
